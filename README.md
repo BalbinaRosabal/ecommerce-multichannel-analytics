@@ -21,7 +21,7 @@ I designed and implemented the database, staging and ETL workflow, data-quality 
 | Sales transactions | 240 |
 | Units sold | 532 |
 | Total revenue | $64,077.75 |
-| Estimated profit | $19,829.42 |
+| Estimated profit | $19,829.32 |
 | Estimated profit margin | 30.95% |
 | Average transaction value | $266.99 |
 
@@ -64,6 +64,8 @@ The repository includes all five import-ready CSV datasets. The original mobile-
 | `data/partners.csv` | `stg_partners` |
 | `data/partner_sales.csv` | `stg_partner_sales` |
 | `data/products.csv` | `stg_products` |
+
+**Import column mappings:** When importing the CSV files into MySQL using DBeaver, map the `date` column to `sale_date` in the web, mobile, and partner sales tables. For the partners dataset, map `name` to `partner_name` and `url` to `partner_url`. These mappings align the source columns with the staging-table definitions.
 
 **Assumptions:** Product categories and cost rates (0.62–0.78) were added to support estimated-profit calculations; they are not original source-system facts. No fixed unit selling price was assumed from the varying transaction amounts.
 
