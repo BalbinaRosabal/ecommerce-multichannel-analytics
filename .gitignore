@@ -1,0 +1,19 @@
+# Local credentials and configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Backup files and database dumps
+*.sql.gz
+*.bak
+
+# Local development files
+.vscode/settings.json
+.DS_Store
+Thumbs.db
+
+# Data files under data/ are intentionally version-controlled
+# because this repository publishes the course-provided demonstration
+# inputs and the project's synthetic supplemental datasets.

@@ -384,7 +384,7 @@ FROM FactSales
 GROUP BY DATE_FORMAT(sale_date, '%Y-%m')
 ORDER BY sales_month;
 
--- Analysis 3: Month-over-month revenue growth using CTEs and LAG().
+-- Analysis 3: Month-over-month revenue growth rate (using CTE WITH and LAG).
 WITH MonthlyRevenue AS (
     SELECT
         DATE_FORMAT(sale_date, '%Y-%m') AS sales_month,
@@ -655,55 +655,4 @@ SELECT *
 FROM MonthlyChannelSummary
 ORDER BY month_start, channel;
 
--- ============================================================
--- 7. ROLE-BASED ACCESS CONTROL
--- ============================================================
-
--- Remove existing project users and roles if they already exist.
-DROP USER IF EXISTS
-    'analyst_user'@'localhost',
-    'etl_user'@'localhost';
-
-DROP ROLE IF EXISTS
-    'analyst_role',
-    'etl_role';
-
--- Create least-privilege roles.
-CREATE ROLE 'analyst_role', 'etl_role';
-
--- Analyst has read-only access to the ecommerce_analytics database.
-GRANT SELECT ON ecommerce_analytics.* TO 'analyst_role';
-
--- ETL role can manipulate project data but is not granted
--- structural/server administration privileges.
-
-GRANT SELECT, INSERT, UPDATE, DELETE
-ON ecommerce_analytics.* TO 'etl_role';
-
--- Create users with placeholder passwords and assign their roles.
-CREATE USER 'analyst_user'@'localhost'
-IDENTIFIED BY 'YOUR_SECURE_PASSWORD_HERE';
-
-CREATE USER 'etl_user'@'localhost'
-IDENTIFIED BY 'YOUR_SECURE_PASSWORD_HERE';
-
-GRANT 'analyst_role'
-TO 'analyst_user'@'localhost';
-
-GRANT 'etl_role'
-TO 'etl_user'@'localhost';
-
-SET DEFAULT ROLE 'analyst_role'
-TO 'analyst_user'@'localhost';
-
-SET DEFAULT ROLE 'etl_role'
-TO 'etl_user'@'localhost';
-
-SHOW GRANTS FOR 'analyst_role';
-SHOW GRANTS FOR 'etl_role';
-SHOW GRANTS FOR 'analyst_user'@'localhost';
-SHOW GRANTS FOR 'etl_user'@'localhost';
-
--- ============================================================
--- END OF SCRIPT
--- ============================================================
+-- The optional account/role demonstration lives in sql/security_demo.sql.
